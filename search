@@ -53,7 +53,8 @@ _search() {
 
         COMPREPLY=()
         local cur prev
-        _get_comp_words_by_ref cur prev
+        _get_comp_words_by_ref -n = cur prev words
+
 
         case "$prev" in
                 "-p")
@@ -64,6 +65,10 @@ _search() {
                         return
                         ;;
         esac
+
+        if [[ $prev != "search" && $cur == "" && $words == "search" ]]; then
+                return
+        fi
 
         case "$cur" in
                 *)
