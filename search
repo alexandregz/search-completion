@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+_search() {
+	local providers=(
+                        amazon
+                        amazon.es
+                        baidu
+                        bing
+                        coursera
+                        digg
+                        dockerhub
+                        duckduckgo
+                        dumpert
+                        facebook
+                        flickr
+                        gist
+                        github
+                        gmail
+                        go
+                        godoc
+                        google
+                        hackernews
+                        imgur
+                        kickasstorrents
+                        libgen
+                        npm
+                        npmsearch
+                        packagist
+                        php
+                        pinterest
+                        quora
+                        reddit
+                        rubygems
+                        soundcloud
+                        stackoverflow
+                        steam
+                        taobao
+                        thepiratebay
+                        twitchtv
+                        twitter
+                        wikipedia
+                        yahoo
+                        yandex
+                        youtube
+        )
+
+	local options=(
+		-b
+		-l
+		-p
+		-v
+        )
+
+        COMPREPLY=()
+        local cur prev
+        _get_comp_words_by_ref cur prev
+
+        case "$prev" in
+                "-p")
+                        COMPREPLY=( $( compgen -W "${providers[*]}" -- "$cur" ) )
+                        return
+                        ;;
+                -*)
+                        return
+                        ;;
+        esac
+
+        case "$cur" in
+                *)
+                        COMPREPLY=( $( compgen -W "${options[*]}" -- "$cur" ) )
+                        ;;
+        esac
+
+        return
+}
+
+complete -F _search search
